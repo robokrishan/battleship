@@ -6,8 +6,7 @@
 #define SIZE_CRUISER 3
 #define SIZE_SUBMARINE 3
 #define SIZE_DESTROYER 2
-#define SIZE_GRID_ROW 10
-#define SIZE_GRID_COL 10
+
 
 enum Ship_t {
     SHIP_CARRIER = 0,
