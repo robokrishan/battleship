@@ -1,8 +1,12 @@
+#ifndef __GRID_H__
+#define __GRID_H__
+
 #include <iostream>
 #include "../game_err.h"
 #include "../ship_type.h"
 #include "../Position.h"
 #include "../Ship/Ship.h"
+#include "../BattleshipUtil.h"
 
 class Grid {
     private:
@@ -30,3 +34,5 @@ class Grid {
 
         void printGrid(void);
 };
+
+#endif /* __GRID_H__ */
