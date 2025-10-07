@@ -1,0 +1,128 @@
+#include "Player.h"
+#include "BattleshipUtil.h"
+
+// #define DEBUG
+
+Player::Player() {
+#ifdef DEBUG
+    std::cout << "Player::Player()\tDefault Constructor" << std::endl;
+#endif
+}
+
+Player::Player(std::string szNewName) : szName(szNewName) {
+#ifdef DEBUG
+    std::cout << "Player::Player()\tParametrized Constructor" << std::endl;
+#endif
+
+}
+
+Player::~Player() {
+#ifdef DEBUG
+    std::cout << "Player::~Player()\tDestructor" << std::endl;
+#endif
+
+    delete pCarrier;
+    delete pBattleship;
+    delete pDestroyer;
+    delete pSubmarine;
+    delete pCruiser;
+}
+
+GameErr_t Player::setName(std::string szNewName) {
+#ifdef DEBUG
+    std::cout << "Player::setName()\tMember function" << std::endl;
+#endif
+
+    if(szNewName.length() > MAX_NAME_LENGTH || szNewName.length() == 0) {
+        std::cout << "Invalid name length " << szNewName.length() << "!" << std::endl;
+        std::cout << "Must be [2, " << MAX_NAME_LENGTH << "]. Cannot be 'PC'." << std::endl;
+
+        return GAME_VALUE_ERR;
+    }
+
+    this->szName = szNewName;
+
+    return GAME_OK;
+}
+
+std::string Player::getName() {
+#ifdef DEBUG
+    std::cout << "Player::getName()\tMember function" << std::endl;
+#endif
+
+    return this->szName;
+}
+
+Grid* Player::getGrid() {
+#ifdef DEBUG
+    std::cout << "Player::getGrid()\tMember function" << std::endl;
+#endif
+
+    return &sGrid;
+}
+
+GameErr_t Player::initializeShips() {
+#ifdef DEBUG
+    std::cout << "Player::initializeShips()\tMember function" << std::endl;
+#endif
+
+    this->pCarrier = new Ship(SHIP_CARRIER);
+    this->pBattleship = new Ship(SHIP_BATTLESHIP);
+    this->pDestroyer = new Ship(SHIP_DESTROYER);
+    this->pSubmarine = new Ship(SHIP_SUBMARINE);
+    this->pCruiser = new Ship(SHIP_CRUISER);
+
+    return GAME_OK;
+}
+
+GameErr_t Player::placeShipsAutomatically() {
+#ifdef DEBUG
+    std::cout << "Player::placeShipsAutomatically()\tMember function" << std::endl;
+#endif
+    
+    GameErr_t lErr = GAME_OK;
+
+    lErr = this->sGrid.randomPlaceShip(this->pCarrier);
+    if(GAME_OK != lErr) {
+#ifdef DEBUG
+        std::cout << "Failed to auto place carrier! Aborting..." << std::endl;
+#endif
+        goto end_auto_place;
+    }
+
+    lErr = this->sGrid.randomPlaceShip(this->pBattleship);
+    if(GAME_OK != lErr) {
+#ifdef DEBUG
+        std::cout << "Failed to auto place battleship! Aborting..." << std::endl;
+#endif
+        goto end_auto_place;
+    }
+
+    lErr = this->sGrid.randomPlaceShip(this->pDestroyer);
+    if(GAME_OK != lErr) {
+#ifdef DEBUG
+        std::cout << "Failed to auto place destroyer! Aborting..." << std::endl;
+#endif
+        goto end_auto_place;
+    }
+
+    lErr = this->sGrid.randomPlaceShip(this->pSubmarine);
+    if(GAME_OK != lErr) {
+#ifdef DEBUG
+        std::cout << "Failed to auto place submarine! Aborting..." << std::endl;
+#endif
+        goto end_auto_place;
+    }
+
+    lErr = this->sGrid.randomPlaceShip(this->pCruiser);
+    if(GAME_OK != lErr) {
+#ifdef DEBUG
+        std::cout << "Failed to auto place cruiser! Aborting..." << std::endl;
+#endif
+        goto end_auto_place;
+    }
+
+end_auto_place:
+
+    return lErr;
+}
