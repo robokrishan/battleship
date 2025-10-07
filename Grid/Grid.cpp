@@ -1,9 +1,6 @@
-#ifndef __GRID_H__
-#define __GRID_H__
-
 #include "Grid.h"
 
-// # define DEBUG 1
+// # define DEBUG
 
 // constructors and destructors
 Grid::Grid() {
@@ -187,13 +184,22 @@ GameErr_t Grid::randomPlaceShip(Ship* pShip) {
 }
 
 bool Grid::isFit(Ship* pShip, Position* pPos) {
+#ifdef DEBUG
+    std::cout << "Grid::isFit()\tMember function" << std::endl;
+#endif
     if('O' != *this->grid[pPos->X][pPos->Y]) {
         return false;
     }
 
+#ifdef DEBUG
+    std::cout << "Checking horizontal fit..." << std::endl;
+#endif
     // try horizontal fit
     if(pPos->X + pShip->getSize() >= this->getRow()) {
 
+#ifdef DEBUG
+        std::cout << "Checking vertical fit..." << std::endl;
+#endif
         // try vertical fit
         if(pPos->Y + pShip->getSize() >= this->getCol()) {
             return false;
@@ -210,6 +216,9 @@ bool Grid::isFit(Ship* pShip, Position* pPos) {
         }
     } else {
 
+#ifdef DEBUG
+        std::cout << "Checking horizontal obstacles..." << std::endl;
+#endif
         // Check if obstacle present
         for(int i = 0; i < pShip->getSize(); i++) {
             if(*this->grid[pPos->X + i][pPos->Y] != 'O') {
@@ -222,5 +231,3 @@ bool Grid::isFit(Ship* pShip, Position* pPos) {
     }
 }
 
-
-#endif /* __GRID_H__ */
