@@ -137,21 +137,3 @@ void Battleship::printGameBoard() {
 
 
 }
-
-// void printTopBar() {
-//     for(int i = 0; i < 90; i++) {
-//         std::cout << "=";
-//     }
-
-//     std::cout << "\n##";
-//     for(int i = 0; i < 86; i++) {
-//         std::cout << " ";
-//     }
-//     std::cout << "##\n";
-// }
-
-// void printBottomBar() {
-//     for(int i = 0; i < 90; i++) {
-//         std::cout << "=";
-//     }
-// }
