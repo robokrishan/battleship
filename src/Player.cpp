@@ -141,6 +141,13 @@ bool Player::attack(Player* pOpponent, Position sPos) {
     }
 }
 
+bool Player::isAttacked(Position sPos) {
+    bool alreadyHit = (*this->sGrid.getGrid()[sPos.X][sPos.Y] == 'X') || 
+        (*this->sGrid.getGrid()[sPos.X][sPos.Y] == '~');
+
+    return alreadyHit;
+}
+
 int Player::getPlayerHealth() {
 #ifdef DEBUG
     std::cout << "Player::getPlayerHealth()\tMember function" << std::endl;

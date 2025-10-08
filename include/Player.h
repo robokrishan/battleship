@@ -34,6 +34,8 @@ class Player {
         int getPlayerHealth(void);
 
         bool isAlive(void);
+
+        bool isAttacked(Position);
 };
 
 #endif /* __PLAYER_H__ */

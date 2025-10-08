@@ -13,6 +13,7 @@ Battleship::Battleship(int lNum) : lNumPlayers(lNum) {
     this->pPlayers = new Player[this->lNumPlayers];
 }
 
+
 Battleship::~Battleship() {
 #ifdef DEBUG
     std::cout << "Battleship::~Battleship()\tDestructor" << std::endl;
@@ -20,6 +21,7 @@ Battleship::~Battleship() {
 
     delete[] this->pPlayers;
 }
+
 
 GameErr_t Battleship::setNumPlayers(int lNum) {
 #ifdef DEBUG
@@ -35,6 +37,7 @@ GameErr_t Battleship::setNumPlayers(int lNum) {
     return GAME_OK;
 }
 
+
 int Battleship::getNumPlayers() {
 #ifdef DEBUG
     std::cout << "Battleship::getNumPlayers()\tMember function" << std::endl;
@@ -42,6 +45,7 @@ int Battleship::getNumPlayers() {
 
     return this->lNumPlayers;
 }
+
 
 GameErr_t Battleship::play() {
 #ifdef DEBUG
@@ -95,29 +99,23 @@ GameErr_t Battleship::play() {
         }
     }
 
-    this->printGameBoard();
+    this->printGameBoardV2();
 
     int lPlayerTurn = 0;
     bool succ;
+    Position sAttackPos;
 
     while(this->pPlayers[0].isAlive() && this->pPlayers[1].isAlive()) {
-        int lX = -1;
-        int lY = -1;
         
-        lErr = this->takeAttackInput(&lX, &lY, lPlayerTurn);
+        lErr = this->takeAttackInput(sAttackPos, lPlayerTurn);
         if (GAME_OK != lErr) {
             lPlayerTurn ^= 1;
             continue;
         }
-        
-        Position sAttackPos = {
-            .X = lX - 1,
-            .Y = lY - 1,
-        };
 
         std::cout << this->pPlayers[lPlayerTurn].getName() << " attacking ";
-        std::cout << this->pPlayers[lPlayerTurn^1].getName() << " at ( " << lX << ", ";
-        std::cout << lY << " )\t...";
+        std::cout << this->pPlayers[lPlayerTurn^1].getName() << " at ( " << sAttackPos.X+1 << ", ";
+        std::cout << sAttackPos.Y+1 << " )\t...";
 
         succ = this->pPlayers[lPlayerTurn].attack(&this->pPlayers[lPlayerTurn^1], sAttackPos);
 
@@ -127,11 +125,11 @@ GameErr_t Battleship::play() {
             std::cout << "miss" << std::endl;
         }
 
-        this->printGameBoard();
+        this->printGameBoardV2();
 
         if(!succ) {
             lPlayerTurn ^= 1;
-        }   
+        }
     }
 
     std::string winner;
@@ -147,7 +145,12 @@ GameErr_t Battleship::play() {
     return lErr;
 }
 
-GameErr_t Battleship::takeAttackInput(int* pX, int* pY, int lPlayerTurn) {
+
+GameErr_t Battleship::takeAttackInput(Position& pPosition, int lPlayerTurn) {
+#ifdef DEBUG
+    std::cout << "Battleship::takeAttackInput()\tMember function" << std::endl;
+#endif
+
     GameErr_t lErr = GAME_OK;
     int lOpponent = lPlayerTurn ^ 1;
 
@@ -158,25 +161,40 @@ GameErr_t Battleship::takeAttackInput(int* pX, int* pY, int lPlayerTurn) {
 
     do {
         std::cout << this->pPlayers[lPlayerTurn].getName() << ". Enter coordinates to attack (x,y): ";
-        std::cin >> *pX >> cDelim >> *pY;
+        std::cin >> pPosition.X >> cDelim >> pPosition.Y;
         std::cout << std::endl;
 
-        bool rangeErr =  (*pX <= 0 || *pX > lOppRow || *pY <= 0 || *pY > lOppCol);
-        bool delimErr = (cDelim != ',');
-
-        if(delimErr) {
-            std::cout << "ERROR: Invalid delimiter. Please use comma ','" << std::endl;
-            lErr = GAME_VALUE_ERR;
-        }
-
+        bool rangeErr =  (pPosition.X <= 0 || pPosition.X > lOppRow || pPosition.Y <= 0 || pPosition.Y > lOppCol);
         if(rangeErr) {
             std::cout << "ERROR: Invalid value. Enter coordinates in range ( [1, ";
             std::cout << lOppRow << "], [1, ";
             std::cout << lOppCol << "] )" << std::endl;
             lErr = GAME_VALUE_ERR;
         }
+
+        bool delimErr = (cDelim != ',');
+        if(delimErr) {
+            std::cout << "ERROR: Invalid delimiter. Please use comma ','" << std::endl;
+            lErr = GAME_VALUE_ERR;
+        }
+
+        bool alreadyAttacked = false;
+        if(!rangeErr && !delimErr) {
+            Position realPosition = {
+                .X = pPosition.X-1,
+                .Y = pPosition.Y-1,
+            };
+
+            alreadyAttacked = this->pPlayers[lOpponent].isAttacked(realPosition);
+
+            if(alreadyAttacked) {
+                std::cout << "ERROR: Already attacked here!" << std::endl;
+            }
+        }
         
-        if(!delimErr && !rangeErr) {
+        if(!delimErr && !rangeErr && !alreadyAttacked) {
+            pPosition.X--;
+            pPosition.Y--;
             return GAME_OK;
         }
 
@@ -189,54 +207,62 @@ GameErr_t Battleship::takeAttackInput(int* pX, int* pY, int lPlayerTurn) {
     return lErr;
 }
 
-// void Battleship::printGameBoard() {
-//     for(int i = 0; i < 90; i++) {
-//         std::cout << "=";
-//     }
 
-//     std::cout << "\n##";
-//     for(int i = 0; i < 86; i++) {
-//         std::cout << " ";
-//     }
-//     std::cout << "##\n";
+void Battleship::printGameBoardV1() {
+#ifdef DEBUG
+    std::cout << "Battleship::printGameBoardV1()\tMember function" << std::endl;
+#endif
 
-//     for(int i = 0; i < this->pPlayers[0].getGrid()->getRow(); i++) {
+    for(int i = 0; i < 90; i++) {
+        std::cout << "=";
+    }
 
-//         // Print for P1
-//         for(int j = 0; j < this->pPlayers[0].getGrid()->getRow(); j++) {
-//             if(j == 0) {
-//                 std::cout << "##  ";
-//             }
-//             std::cout << " " << *this->pPlayers[0].getGrid()->getGrid()[i][j] << " ";
-//         }
+    std::cout << "\n##";
+    for(int i = 0; i < 86; i++) {
+        std::cout << " ";
+    }
+    std::cout << "##\n";
 
-//         std::cout << "\t\t\t";
+    for(int i = 0; i < this->pPlayers[0].getGrid()->getRow(); i++) {
 
-//         // Print for P2
-//         for(int j = 0; j < this->pPlayers[1].getGrid()->getRow(); j++) {
-//             std::cout << " " << *this->pPlayers[1].getGrid()->getGrid()[i][j] << " ";
-//             if(j == this->pPlayers[1].getGrid()->getRow() - 1) {
-//                 std::cout << "  ##";
-//             }
-//         }
+        // Print for P1
+        for(int j = 0; j < this->pPlayers[0].getGrid()->getRow(); j++) {
+            if(j == 0) {
+                std::cout << "##  ";
+            }
+            std::cout << " " << *this->pPlayers[0].getGrid()->getGrid()[i][j] << " ";
+        }
 
-//         std::cout << "\n##";
-//         for(int i = 0; i < 86; i++) {
-//             std::cout << " ";
-//         }
-//         std::cout << "##\n";
-//     }
+        std::cout << "\t\t\t";
 
-//     for(int i = 0; i < 90; i++) {
-//         std::cout << "=";
-//     }
+        // Print for P2
+        for(int j = 0; j < this->pPlayers[1].getGrid()->getRow(); j++) {
+            std::cout << " " << *this->pPlayers[1].getGrid()->getGrid()[i][j] << " ";
+            if(j == this->pPlayers[1].getGrid()->getRow() - 1) {
+                std::cout << "  ##";
+            }
+        }
 
-//     std::cout << std::endl << std::endl;
-// }
+        std::cout << "\n##";
+        for(int i = 0; i < 86; i++) {
+            std::cout << " ";
+        }
+        std::cout << "##\n";
+    }
 
-#include <iomanip> // for std::setw, std::setfill
+    for(int i = 0; i < 90; i++) {
+        std::cout << "=";
+    }
 
-void Battleship::printGameBoard() {
+    std::cout << std::endl << std::endl;
+}
+
+
+void Battleship::printGameBoardV2() {
+#ifdef DEBUG
+    std::cout << "Battleship::printGameBoardV2()\tMember function" << std::endl;
+#endif
+
     int rows = this->pPlayers[0].getGrid()->getRow();
     int cols = this->pPlayers[0].getGrid()->getCol();
 
@@ -244,7 +270,7 @@ void Battleship::printGameBoard() {
     int spacing = 5;                    // Space between grids
     int totalWidth = boardWidth * 2 + spacing + 10;
 
-    
+
     // ===== Top Border =====
     for (int i = 0; i < totalWidth; i++) std::cout << "=";
     std::cout << "\n##" << std::setw(totalWidth - 4) << std::setfill(' ') << "  " << "##\n";

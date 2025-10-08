@@ -11,7 +11,7 @@ class Battleship {
         int lNumPlayers;
         Player* pPlayers;
 
-        GameErr_t takeAttackInput(int*, int*, int);
+        GameErr_t takeAttackInput(Position&, int);
 
     public:
         Battleship(int);
@@ -22,7 +22,8 @@ class Battleship {
 
         GameErr_t play(void);
 
-        void printGameBoard(void);
+        void printGameBoardV1(void);
+        void printGameBoardV2(void);
 };
 
 #endif /* __BATTLESHIP_H__ */
