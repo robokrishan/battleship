@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "ship_type.h"
+#include "ShipType.h"
 #include "Ship.h"
 #include "Grid.h"
 #include "Position.h"

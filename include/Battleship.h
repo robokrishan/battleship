@@ -2,7 +2,7 @@
 #define __BATTLESHIP_H__
 
 #include <iostream>
-#include "ship_type.h"
+#include "ShipType.h"
 #include "Player.h"
 #include "game_err.h"
 

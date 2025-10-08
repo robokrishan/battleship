@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "game_err.h"
-#include "ship_type.h"
+#include "ShipType.h"
 #include "Position.h"
 #include "Ship.h"
 #include "BattleshipUtil.h"
