@@ -133,6 +133,8 @@ g++ -Wall -fsanitize=address -g -o game *.cpp
 
 - 📊 Scoreboard and replay system
 
+- 🚢 Manual placement of ships
+
 ## 🧑‍💻 Author
 
 Harit Krishan
