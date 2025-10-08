@@ -125,7 +125,7 @@ g++ -Wall -fsanitize=address -g -o game *.cpp
 ./game
 ```
 
-###n🧭 Future Enhancements
+### 🧭 Future Enhancements
 
 - 🧠 Turn-based attack logic (fireAt(x, y))
 
