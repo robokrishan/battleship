@@ -11,6 +11,8 @@ class Battleship {
         int lNumPlayers;
         Player* pPlayers;
 
+        GameErr_t takeAttackInput(int*, int*, int);
+
     public:
         Battleship(int);
         ~Battleship();

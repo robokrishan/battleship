@@ -18,7 +18,5 @@ int main() {
 
     game.play();
 
-    game.printGameBoard();
-
     return 0;
 }

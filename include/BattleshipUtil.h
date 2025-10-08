@@ -8,4 +8,6 @@
 #define NUM_SHIPS 5
 #define MAX_PLAYERS 2
 
+const char INPUT_DELIM = ',';
+
 #endif /* __BATTLESHIPUTIL_H__ */

@@ -28,6 +28,12 @@ class Player {
         GameErr_t initializeShips(void);
 
         GameErr_t placeShipsAutomatically(void);
+
+        bool attack(Player*, Position);
+
+        int getPlayerHealth(void);
+
+        bool isAlive(void);
 };
 
 #endif /* __PLAYER_H__ */

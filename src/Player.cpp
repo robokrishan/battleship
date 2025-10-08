@@ -126,3 +126,41 @@ end_auto_place:
 
     return lErr;
 }
+
+bool Player::attack(Player* pOpponent, Position sPos) {
+#ifdef DEBUG
+    std::cout << "Player::attack()\tMember function" << std::endl;
+#endif
+
+    if(*pOpponent->getGrid()->getGrid()[sPos.X][sPos.Y] == 'O') {
+        *pOpponent->getGrid()->getGrid()[sPos.X][sPos.Y] = '~';
+        return false;
+    } else {
+        *pOpponent->getGrid()->getGrid()[sPos.X][sPos.Y] = 'X';
+        return true;
+    }
+}
+
+int Player::getPlayerHealth() {
+#ifdef DEBUG
+    std::cout << "Player::getPlayerHealth()\tMember function" << std::endl;
+#endif
+
+    int lHealth = 0;
+
+    lHealth += pCarrier->getShipHealth();
+    lHealth += pBattleship->getShipHealth();
+    lHealth += pDestroyer->getShipHealth();
+    lHealth += pSubmarine->getShipHealth();
+    lHealth += pCruiser->getShipHealth();
+
+    return lHealth;
+}
+
+bool Player::isAlive() {
+#ifdef DEBUG
+    std::cout << "Player::isAlive()\tMember function" << std::endl;
+#endif
+
+    return this->getPlayerHealth() > 0;
+}

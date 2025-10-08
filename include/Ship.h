@@ -23,6 +23,10 @@ class Ship {
         char* getShipMap(void);
 
         Ship_t getShipType(void);
+
+        int getShipHealth(void);
+
+        char getShipChar(void);
 };
 
 #endif /* __SHIP_H__ */

@@ -1,6 +1,9 @@
 #include "Ship.h"
 
 Ship::Ship(Ship_t eShip) : eType(eShip) {
+#ifdef DEBUG
+    std::cout << "Ship::Ship()\tParametrized constructor" << std::endl;
+#endif
 
     switch(eShip) {
         case SHIP_CARRIER: {        
@@ -43,10 +46,18 @@ Ship::Ship(Ship_t eShip) : eType(eShip) {
 }
 
 Ship::~Ship() {
+#ifdef DEBUG
+    std::cout << "Ship::~Ship()\tDestructor" << std::endl;
+#endif
+
     delete[] this->shipMap;
 }
 
 GameErr_t Ship::setSize(int newSize) {
+#ifdef DEBUG
+    std::cout << "Ship::setSize()\tMember function" << std::endl;
+#endif
+
     if(newSize <= 0) {
         return GAME_VALUE_ERR;
     }
@@ -57,10 +68,18 @@ GameErr_t Ship::setSize(int newSize) {
 }
 
 int Ship::getSize() {
+#ifdef DEBUG
+    std::cout << "Ship::getSize()\tMember function" << std::endl;
+#endif
+
     return this->size;
 }
 
 GameErr_t Ship::buildShipMap(int newSize) {
+#ifdef DEBUG
+    std::cout << "Ship::buildShipMap()\tMember function" << std::endl;
+#endif
+
     if (newSize <= 0) {
         return GAME_VALUE_ERR;
     }
@@ -75,9 +94,41 @@ GameErr_t Ship::buildShipMap(int newSize) {
 }
 
 char* Ship::getShipMap() {
+#ifdef DEBUG
+    std::cout << "Ship::getShipMap()\tMember function" << std::endl;
+#endif
+
     return this->shipMap;
 }
 
 Ship_t Ship::getShipType() {
+#ifdef DEBUG
+    std::cout << "Ship::getShipType()\tMember function" << std::endl;
+#endif
+
     return this->eType;
+}
+
+int Ship::getShipHealth() {
+#ifdef DEBUG
+    std::cout << "Ship::getShipHealth()\tMember function" << std::endl;
+#endif
+
+    int lHealth = 0;
+
+    for(int i = 0; i < this->getSize(); i++) {
+        if(this->getShipMap()[i] == this->getShipChar()) {
+            lHealth++;
+        }
+    }
+
+    return lHealth;
+}
+
+char Ship::getShipChar() {
+#ifdef DEBUG
+    std::cout << "Ship::getShipChar()\tMember function" << std::endl;
+#endif
+
+    return this->shipChar;
 }

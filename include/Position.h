@@ -9,7 +9,7 @@ enum Orientation {
 struct Position {
     int X;
     int Y;
-    Orientation o;
+    Orientation o = HORIZONTAL;
 };
 
 #endif /* __POSITION_H__ */
