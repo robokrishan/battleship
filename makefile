@@ -1,9 +1,9 @@
 all:
-	 g++ -Wall -o game main.cpp Ship/Ship.cpp Grid/Grid.cpp Player.cpp Battleship.cpp
+	 g++ -Wall -Iinclude src/*.cpp -o game
 	 ./game
 
 build:
-	 g++ -Wall -o game main.cpp Ship/Ship.cpp Grid/Grid.cpp Player.cpp Battleship.cpp
+	 g++ -Wall -Iinclude src/*.cpp -o game
 
 run:
 	 ./game
