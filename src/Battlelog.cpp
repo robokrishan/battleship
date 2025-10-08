@@ -10,6 +10,7 @@ Battlelog::Battlelog() {
 
 }
 
+
 Battlelog::~Battlelog() {
 #ifdef DEBUG
     std::cout << "Battlelog::~Battlelog()\tDestructor" << std::endl;
@@ -17,6 +18,7 @@ Battlelog::~Battlelog() {
 
 
 }
+
 
 void Battlelog::logEntry(std::string szPlayerName, Position sPos, bool isHit) {
 #ifdef DEBUG
@@ -35,7 +37,8 @@ void Battlelog::logEntry(std::string szPlayerName, Position sPos, bool isHit) {
     this->vRegister.push_back(sEntry);
 }
 
-void Battlelog::showHistory(void) {
+
+void Battlelog::showHistory(void) const {
 #ifdef DEBUG
     std::cout << "Battlelog::showHistory()\tMember function" << std::endl;
 #endif
@@ -51,18 +54,26 @@ void Battlelog::showHistory(void) {
     }
 }
 
-void Battlelog::printEntry(int lIndex) {
+
+void Battlelog::printEntry(int lIndex) const {
 #ifdef DEBUG
     std::cout << "Battlelog::printEntry()\tMember function" << std::endl;
 #endif
 
+    if(lIndex < 0 || lIndex >= this->vRegister.size()) {
+        std::cout << "ERROR: Invalid log index: " << lIndex << std::endl;
+        return;
+    }
+
     AttackEntry sEntry = this->vRegister[lIndex];
 
-    std::cout << lIndex+1 << ". " <<  sEntry.szPlayerName << "\t( " <<  sEntry.sPos.X << ", " << sEntry.sPos.Y;
-    std::cout << " )\tHit: " << sEntry.isHit << std::endl;
+    std::cout << lIndex+1 << ". " <<  sEntry.szPlayerName << "\t( " 
+                <<  sEntry.sPos.X << ", " << sEntry.sPos.Y
+                << " )\tHit: " << sEntry.isHit << std::endl;
 }
 
-int Battlelog::getLogSize(void) {
+
+int Battlelog::getLogSize(void) const {
 #ifdef DEBUG
     std::cout << "Battlelog::getLogSize()\tMember function" << std::endl;
 #endif

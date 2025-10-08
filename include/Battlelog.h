@@ -3,7 +3,6 @@
 
 #include "Position.h"
 #include "vector"
-#include "game_err.h"
 
 struct AttackEntry {
     std::string szPlayerName;
@@ -21,11 +20,11 @@ class Battlelog {
 
         void logEntry(std::string, Position, bool);
 
-        void showHistory(void);
+        void showHistory(void) const;
 
-        void printEntry(int);
+        void printEntry(int) const;
 
-        int getLogSize(void);
+        int getLogSize(void) const;
 };
 
 #endif /* __BATTLELOG_H__ */
