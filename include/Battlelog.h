@@ -18,7 +18,7 @@ class Battlelog {
         Battlelog();
         ~Battlelog();
 
-        void logEntry(std::string, Position, bool);
+        void logEntry(const std::string, const Position&, bool);
 
         void showHistory(void) const;
 

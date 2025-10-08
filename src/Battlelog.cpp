@@ -20,19 +20,12 @@ Battlelog::~Battlelog() {
 }
 
 
-void Battlelog::logEntry(std::string szPlayerName, Position sPos, bool isHit) {
+void Battlelog::logEntry(const std::string szPlayerName, const Position& sPos, bool isHit) {
 #ifdef DEBUG
     std::cout << "Battlelog::logEntry()\tMember function" << std::endl;
 #endif
 
-    AttackEntry sEntry = {
-        .szPlayerName = szPlayerName,
-        .sPos = {
-            .X = sPos.X,
-            .Y = sPos.Y,
-        },
-        .isHit = isHit
-    };
+    AttackEntry sEntry{szPlayerName, sPos, isHit};
 
     this->vRegister.push_back(sEntry);
 }
@@ -45,6 +38,7 @@ void Battlelog::showHistory(void) const {
 
     if(this->getLogSize() <= 0) {
         std::cout << "No entries in battlelog!" << std::endl;
+        return;
     }
 
     std::cout << "Attack History:" << std::endl;
