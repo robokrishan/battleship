@@ -127,13 +127,9 @@ g++ -Wall -fsanitize=address -g -o game *.cpp
 
 ### 🧭 Future Enhancements
 
-- 🧠 Turn-based attack logic (fireAt(x, y))
-
-- 🎯 Hit/miss tracking and display
-
 - 🧍 Single-player mode vs computer AI
 
-- 💻 GUI or terminal-based visual board
+- 💻 GUI visual board
 
 - 📊 Scoreboard and replay system
 
