@@ -2,11 +2,11 @@
 #define __GRID_H__
 
 #include <iostream>
-#include "../game_err.h"
-#include "../ship_type.h"
-#include "../Position.h"
-#include "../Ship/Ship.h"
-#include "../BattleshipUtil.h"
+#include "game_err.h"
+#include "ship_type.h"
+#include "Position.h"
+#include "Ship.h"
+#include "BattleshipUtil.h"
 
 class Grid {
     private:

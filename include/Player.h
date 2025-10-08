@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "game_err.h"
-#include "Grid/Grid.h"
+#include "Grid.h"
 
 class Player {
     private:

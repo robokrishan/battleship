@@ -3,8 +3,8 @@
 #include <ctime>
 
 #include "ship_type.h"
-#include "Ship/Ship.h"
-#include "Grid/Grid.h"
+#include "Ship.h"
+#include "Grid.h"
 #include "Position.h"
 #include "Battleship.h"
 

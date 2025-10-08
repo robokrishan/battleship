@@ -2,8 +2,8 @@
 #define __SHIP_H__
 
 #include <iostream>
-#include "../game_err.h"
-#include "../ship_type.h"
+#include "game_err.h"
+#include "ship_type.h"
 
 class Ship {
     private:
