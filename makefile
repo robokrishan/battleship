@@ -1,9 +1,9 @@
 all:
-	 g++ -std=c++17 -Wall -Iinclude src/*.cpp -o game
+	 g++ -std=c++17 -Wall -Iinclude main.cpp src/*.cpp -o game
 	 ./game
 
 build:
-	 g++ -std=c++17 -Wall -Iinclude src/*.cpp -o game
+	 g++ -std=c++17 -Wall -Iinclude main.cpp src/*.cpp -o game
 
 run:
 	 ./game

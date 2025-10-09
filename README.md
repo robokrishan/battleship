@@ -40,9 +40,9 @@ Battleship/
 │   ├── Battleship.cpp
 │   ├── Grid.cpp
 │   ├── Player.cpp
-│   ├── Ship.cpp
-│   └── main.cpp
-│
+│   └── Ship.cpp
+│   
+│── main.cpp                 # main file (entry point)
 ├── Makefile                 # Build configuration
 ├── README.md                # Project documentation
 └── .gitignore               # Ignored build artifacts and binaries
