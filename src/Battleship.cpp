@@ -108,9 +108,11 @@ GameErr_t Battleship::play() {
     while(this->pPlayers[0].isAlive() && this->pPlayers[1].isAlive()) {
         
         lErr = this->takeAttackInput(sAttackPos, lPlayerTurn);
-        if (GAME_OK != lErr) {
+        if (GAME_VALUE_ERR == lErr) {
             lPlayerTurn ^= 1;
             continue;
+        } else if (GAME_ABORT_ERR == lErr) {
+            return lErr;
         }
 
         std::cout << this->pPlayers[lPlayerTurn].getName() << " attacking ";
