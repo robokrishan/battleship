@@ -12,19 +12,23 @@ Battlelog::Battlelog() {
     std::string szFilename;
 
     namespace fs = std::filesystem;
+    
 
-    do {
-        this->pLogFile.close();
-
-        szFilename = "log_" + std::to_string(lCounter) + ".txt";
-
-        this->pLogFile.open(szFilename);
+    while(true) {
+        szFilename = "./logs/log_" + std::to_string(lCounter) + ".txt";
+        if(!fs::exists(szFilename)) {
+            break;
+        }
         lCounter++;
+    }
 
-    } while(this->pLogFile.is_open());
-
-    // this->pLogFile
-
+    this->pLogFile.open(szFilename);
+    if(pLogFile.is_open()) {
+        std::cout << "Log file created: " << szFilename << std::endl;
+    } else {
+        std::cout << "ERROR: Failed to create log file: " << szFilename << std::endl;
+    }
+ 
 }
 
 
@@ -33,6 +37,9 @@ Battlelog::~Battlelog() {
     std::cout << "Battlelog::~Battlelog()\tDestructor" << std::endl;
 #endif
 
+    if(this->pLogFile.is_open()) {
+        this->pLogFile.close();
+    }
 
 }
 
@@ -42,9 +49,18 @@ void Battlelog::logEntry(const std::string szPlayerName, const Position& sPos, b
     std::cout << "Battlelog::logEntry()\tMember function" << std::endl;
 #endif
 
+    static int lIndex = 1;
     AttackEntry sEntry{szPlayerName, sPos, isHit};
 
+    // Add to log register
     this->vRegister.push_back(sEntry);
+
+    // Add to logfile
+    this->pLogFile << lIndex << ". " <<  sEntry.szPlayerName << "\t( " 
+                <<  sEntry.sPos.X << ", " << sEntry.sPos.Y
+                << " )\tHit: " << sEntry.isHit << std::endl;
+    
+    lIndex++;
 }
 
 
