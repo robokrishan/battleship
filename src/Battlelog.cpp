@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <filesystem>
+#include "BattleshipUtil.h"
 
 Battlelog::Battlelog() {
 #ifdef DEBUG
@@ -56,9 +57,13 @@ void Battlelog::logEntry(const std::string szPlayerName, const Position& sPos, b
     this->vRegister.push_back(sEntry);
 
     // Add to logfile
-    this->pLogFile << lIndex << ". " <<  sEntry.szPlayerName << "\t( " 
-                <<  sEntry.sPos.X << ", " << sEntry.sPos.Y
-                << " )\tHit: " << sEntry.isHit << std::endl;
+    this->pLogFile << std::setw(3) << lIndex << ". "
+               << std::setw(MAX_NAME_LENGTH) << sEntry.szPlayerName
+               << " | ("
+               << std::setw(2) << sEntry.sPos.X + 1 << ", "
+               << std::setw(2) << sEntry.sPos.Y + 1 << ")"
+               << " | " << (sEntry.isHit ? "HIT" : "MISS")
+               << std::endl;
     
     lIndex++;
 }
