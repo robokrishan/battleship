@@ -1,7 +1,6 @@
 #include "Battleship.h"
 #include "BattleshipUtil.h"
 
-#include <iomanip>
 #include <limits>
 
 // #define DEBUG
@@ -164,7 +163,7 @@ GameErr_t Battleship::takeAttackInput(Position& pPosition, int lPlayerTurn) {
         lenErr = false;
         alreadyAttacked = false;
         std::cout << this->pPlayers[lPlayerTurn].getName() << ". Enter cell to attack (D5/d5): ";
-        
+
         std::cin >> szUserInput;
         if(std::cin.fail()) {
             std::cin.clear();
