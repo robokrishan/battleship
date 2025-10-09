@@ -108,9 +108,11 @@ GameErr_t Battleship::play() {
     while(this->pPlayers[0].isAlive() && this->pPlayers[1].isAlive()) {
         
         lErr = this->takeAttackInput(sAttackPos, lPlayerTurn);
-        if (GAME_OK != lErr) {
+        if (GAME_VALUE_ERR == lErr) {
             lPlayerTurn ^= 1;
             continue;
+        } else if (GAME_ABORT_ERR == lErr) {
+            return lErr;
         }
 
         std::cout << this->pPlayers[lPlayerTurn].getName() << " attacking ";
@@ -118,6 +120,7 @@ GameErr_t Battleship::play() {
         std::cout << sAttackPos.Y+1 << " )\t...";
 
         succ = this->pPlayers[lPlayerTurn].attack(&this->pPlayers[lPlayerTurn^1], sAttackPos);
+        this->sLog.logEntry(this->pPlayers[lPlayerTurn].getName(), sAttackPos, succ);
 
         if(succ) {
             std::cout << "HIT" << std::endl;
@@ -141,6 +144,8 @@ GameErr_t Battleship::play() {
     }
 
     std::cout << winner << " wins!" << std::endl;
+
+    this->sLog.showHistory();
 
     return lErr;
 }

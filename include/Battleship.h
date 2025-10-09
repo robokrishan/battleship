@@ -2,14 +2,17 @@
 #define __BATTLESHIP_H__
 
 #include <iostream>
+
 #include "ShipType.h"
 #include "Player.h"
 #include "game_err.h"
+#include "Battlelog.h"
 
 class Battleship {
     private:
         int lNumPlayers;
         Player* pPlayers;
+        Battlelog sLog;
 
         GameErr_t takeAttackInput(Position&, int);
 
