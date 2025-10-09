@@ -142,6 +142,9 @@ bool Player::attack(Player* pOpponent, Position sPos) {
 }
 
 bool Player::isAttacked(Position sPos) {
+#ifdef DEBUG
+    std::cout << "Player::isAttacked()\tMember function" << std::endl;
+#endif
     bool alreadyHit = (*this->sGrid.getGrid()[sPos.X][sPos.Y] == 'X') || 
         (*this->sGrid.getGrid()[sPos.X][sPos.Y] == '~');
 

@@ -2,10 +2,6 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "ShipType.h"
-#include "Ship.h"
-#include "Grid.h"
-#include "Position.h"
 #include "Battleship.h"
 
 using namespace std;
