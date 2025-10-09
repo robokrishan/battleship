@@ -1,12 +1,29 @@
 #include "Battlelog.h"
 
 #include <iostream>
+#include <filesystem>
 
 Battlelog::Battlelog() {
 #ifdef DEBUG
     std::cout << "Battlelog::Battlelog()\tConstructor" << std::endl;
 #endif
 
+    int lCounter = 1;
+    std::string szFilename;
+
+    namespace fs = std::filesystem;
+
+    do {
+        this->pLogFile.close();
+
+        szFilename = "log_" + std::to_string(lCounter) + ".txt";
+
+        this->pLogFile.open(szFilename);
+        lCounter++;
+
+    } while(this->pLogFile.is_open());
+
+    // this->pLogFile
 
 }
 

@@ -4,6 +4,8 @@
 #include "Position.h"
 #include "vector"
 
+#include <fstream>
+
 struct AttackEntry {
     std::string szPlayerName;
     Position sPos;
@@ -13,6 +15,7 @@ struct AttackEntry {
 class Battlelog {
     private:
         std::vector<AttackEntry> vRegister;
+        std::ofstream pLogFile;
 
     public:
         Battlelog();
