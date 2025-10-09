@@ -8,5 +8,8 @@ build:
 run:
 	 ./game
 
+clear_logs:
+	 rm ./logs/*.txt
+
 clean:
 	 rm game
