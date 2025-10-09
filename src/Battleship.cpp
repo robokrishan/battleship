@@ -116,17 +116,13 @@ GameErr_t Battleship::play() {
         }
 
         std::cout << this->pPlayers[lPlayerTurn].getName() << " attacking ";
-        std::cout << this->pPlayers[lPlayerTurn^1].getName() << " at ( " << sAttackPos.X+1 << ", ";
+        std::cout << this->pPlayers[lPlayerTurn^1].getName() << " at ( " << indexToRowChar(sAttackPos.X);
         std::cout << sAttackPos.Y+1 << " )\t...";
 
         succ = this->pPlayers[lPlayerTurn].attack(&this->pPlayers[lPlayerTurn^1], sAttackPos);
         this->sLog.logEntry(this->pPlayers[lPlayerTurn].getName(), sAttackPos, succ);
 
-        if(succ) {
-            std::cout << "HIT" << std::endl;
-        } else {
-            std::cout << "miss" << std::endl;
-        }
+        std::cout << (succ ? "HIT" : "miss") << std::endl;
 
         this->printGameBoardV2();
 
@@ -135,13 +131,7 @@ GameErr_t Battleship::play() {
         }
     }
 
-    std::string winner;
-
-    if(!this->pPlayers[0].isAlive()) {
-        winner = this->pPlayers[1].getName();
-    } else {
-        winner = this->pPlayers[0].getName();
-    }
+    std::string winner = (!this->pPlayers[0].isAlive() ? this->pPlayers[1].getName() : this->pPlayers[0].getName());
 
     std::cout << winner << " wins!" << std::endl;
 
@@ -162,52 +152,50 @@ GameErr_t Battleship::takeAttackInput(Position& pPosition, int lPlayerTurn) {
     int lOppRow = this->pPlayers[lOpponent].getGrid()->getRow();
     int lOppCol = this->pPlayers[lOpponent].getGrid()->getCol();
     int lAttempts = 3;
-    char cDelim = 0;
+    bool rangeErr;
+    bool lenErr;
+    bool alreadyAttacked;
+
+    std::string szUserInput;
 
     do {
-        std::cout << this->pPlayers[lPlayerTurn].getName() << ". Enter coordinates to attack (x,y): ";
-        std::cin >> pPosition.X >> cDelim >> pPosition.Y;
+        rangeErr = false;
+        lenErr = false;
+        alreadyAttacked = false;
+        std::cout << this->pPlayers[lPlayerTurn].getName() << ". Enter cell to attack (D5/d5): ";
+        std::cin >> szUserInput;
         std::cout << std::endl;
 
-        bool rangeErr =  (pPosition.X <= 0 || pPosition.X > lOppRow || pPosition.Y <= 0 || pPosition.Y > lOppCol);
-        if(rangeErr) {
-            std::cout << "ERROR: Invalid value. Enter coordinates in range ( [1, ";
-            std::cout << lOppRow << "], [1, ";
-            std::cout << lOppCol << "] )" << std::endl;
+        lenErr = (szUserInput.length() > 3 || szUserInput.length() < 2);
+        if(lenErr) {
+            std::cout << "ERROR: Invalid input length!" << std::endl;
             lErr = GAME_VALUE_ERR;
+        } else {
+            pPosition.X = rowCharToIndex(szUserInput[0]);
+            int substrLen = szUserInput.length() - 1;
+            pPosition.Y = std::stoi(szUserInput.substr(1, substrLen)) - 1;
+
+            rangeErr =  (pPosition.X <= 0 || pPosition.X > lOppRow || pPosition.Y <= 0 || pPosition.Y > lOppCol);
+
+            if(!rangeErr) {
+                alreadyAttacked = this->pPlayers[lOpponent].isAttacked(pPosition);
+            }
         }
 
-        bool delimErr = (cDelim != ',');
-        if(delimErr) {
-            std::cout << "ERROR: Invalid delimiter. Please use comma ','" << std::endl;
-            lErr = GAME_VALUE_ERR;
-        }
-
-        bool alreadyAttacked = false;
-        if(!rangeErr && !delimErr) {
-            Position realPosition = {
-                .X = pPosition.X-1,
-                .Y = pPosition.Y-1,
-            };
-
-            alreadyAttacked = this->pPlayers[lOpponent].isAttacked(realPosition);
-
+        if(lenErr || rangeErr || alreadyAttacked) {
             if(alreadyAttacked) {
                 std::cout << "ERROR: Already attacked here!" << std::endl;
             }
+
+            lAttempts--;
+
+            if(lAttempts == 0) {
+                std::cout << "Failed to provide valid input. Next player's turn!" << std::endl;
+                return GAME_VALUE_ERR;
+            }
         }
-        
-        if(!delimErr && !rangeErr && !alreadyAttacked) {
-            pPosition.X--;
-            pPosition.Y--;
-            return GAME_OK;
-        }
 
-        lAttempts--;
-
-    } while(lAttempts > 0);
-
-    std::cout << "Failed to provide valid input. Next player's turn!" << std::endl;
+    } while(lenErr || rangeErr || alreadyAttacked);
 
     return lErr;
 }
@@ -318,7 +306,7 @@ void Battleship::printGameBoardV2() {
     // ===== Rows =====
     for (int i = 0; i < rows; i++) {
         // Left row number
-        std::cout << std::setw(2) << i + 1 << " |";
+        std::cout << std::setw(2) << indexToRowChar(i) << " |";
 
         // P1 grid
         for (int j = 0; j < cols; j++) {
@@ -329,7 +317,7 @@ void Battleship::printGameBoardV2() {
         std::cout << std::setw(spacing - 1) << " ";
 
         // Right row number
-        std::cout << std::setw(2) << i + 1 << " |";
+        std::cout << std::setw(2) << indexToRowChar(i) << " |";
 
         // P2 grid
         for (int j = 0; j < cols; j++) {
