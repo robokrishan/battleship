@@ -25,13 +25,18 @@ This project demonstrates clean design principles, dynamic memory management, an
 ```bash
 Battleship/
 ├── include/                 # Header files (class declarations)
+│   ├── Battlelog.h
 │   ├── Battleship.h
 │   ├── BattleshipUtil.h
+│   ├── game_err.h
 │   ├── Grid.h
 │   ├── Player.h
-│   └── Ship.h
+│   ├── Position.h
+│   ├── Ship.h
+│   └── ShipType.h 
 │
 ├── src/                     # Source files (class definitions)
+│   ├── Battlelog.cpp
 │   ├── Battleship.cpp
 │   ├── Grid.cpp
 │   ├── Player.cpp
