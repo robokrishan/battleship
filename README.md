@@ -47,7 +47,6 @@ Battleship/
 ├── README.md                # Project documentation
 └── .gitignore               # Ignored build artifacts and binaries
 
-
 ```
 
 ---
