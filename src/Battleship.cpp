@@ -2,6 +2,7 @@
 #include "BattleshipUtil.h"
 
 #include <iomanip>
+#include <limits>
 
 // #define DEBUG
 
@@ -163,19 +164,25 @@ GameErr_t Battleship::takeAttackInput(Position& pPosition, int lPlayerTurn) {
         lenErr = false;
         alreadyAttacked = false;
         std::cout << this->pPlayers[lPlayerTurn].getName() << ". Enter cell to attack (D5/d5): ";
+        
         std::cin >> szUserInput;
+        if(std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            lenErr = true;
+        }
+
         std::cout << std::endl;
 
         lenErr = (szUserInput.length() > 3 || szUserInput.length() < 2);
         if(lenErr) {
             std::cout << "ERROR: Invalid input length!" << std::endl;
-            lErr = GAME_VALUE_ERR;
         } else {
             pPosition.X = rowCharToIndex(szUserInput[0]);
             int substrLen = szUserInput.length() - 1;
             pPosition.Y = std::stoi(szUserInput.substr(1, substrLen)) - 1;
 
-            rangeErr =  (pPosition.X <= 0 || pPosition.X > lOppRow || pPosition.Y <= 0 || pPosition.Y > lOppCol);
+            rangeErr =  (pPosition.X < 0 || pPosition.X >= lOppRow || pPosition.Y < 0 || pPosition.Y >= lOppCol);
 
             if(!rangeErr) {
                 alreadyAttacked = this->pPlayers[lOpponent].isAttacked(pPosition);
@@ -186,6 +193,10 @@ GameErr_t Battleship::takeAttackInput(Position& pPosition, int lPlayerTurn) {
             if(alreadyAttacked) {
                 std::cout << "ERROR: Already attacked here!" << std::endl;
             }
+
+            // clear and flush corrupted stream
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
             lAttempts--;
 
