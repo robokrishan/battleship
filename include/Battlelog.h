@@ -16,6 +16,7 @@ class Battlelog {
     private:
         std::vector<AttackEntry> vRegister;
         std::ofstream pLogFile;
+        std::string szLogDir = "./logs/";
 
     public:
         Battlelog();

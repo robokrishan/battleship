@@ -14,9 +14,12 @@ Battlelog::Battlelog() {
 
     namespace fs = std::filesystem;
     
+    if(!fs::exists(this->szLogDir)) {
+        fs::create_directory(this->szLogDir);
+    }
 
     while(true) {
-        szFilename = "./logs/log_" + std::to_string(lCounter) + ".txt";
+        szFilename = this->szLogDir + "log_" + std::to_string(lCounter) + ".txt";
         if(!fs::exists(szFilename)) {
             break;
         }
