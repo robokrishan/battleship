@@ -8,7 +8,6 @@
 #define NUM_SHIPS 5
 #define MAX_PLAYERS 2
 
-const char INPUT_DELIM = ',';
 
 inline int rowCharToIndex(char cRowChar) {
     cRowChar = std::toupper(cRowChar);
