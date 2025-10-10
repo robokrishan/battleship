@@ -125,7 +125,8 @@ GameErr_t Battleship::play() {
         std::cout << (succ ? "HIT" : "miss") << std::endl;
 
         this->printGameBoardV2();
-        this->pPlayers[0].displayFleet();
+        // this->pPlayers[0].displayFleet();
+        this->printFleetScores();
 
         if(!succ) {
             lPlayerTurn ^= 1;
@@ -350,5 +351,40 @@ void Battleship::printFleetScores(void) {
     std::cout << "Battleship::printFleeScores()\tMember function" << std::endl;
 #endif
 
+    std::vector<Ship*> vP1Fleet = this->pPlayers[0].getFleet();
+    std::vector<Ship*> vP2Fleet = this->pPlayers[1].getFleet();
+
+    // Print top bar
+    for(int i = 0; i < 75; i++)     std::cout << "=";
+    std::cout << std::endl;
+
+    for(int i = 0; i < NUM_SHIPS; i++) {
+
+        std::cout << i+1 << ". " << vP1Fleet[i]->getShipStr() << "\t[";
+        
+        for(int j = 0; j < vP1Fleet[i]->getSize(); j++) {
+            if(j < vP1Fleet[i]->getShipHealth()) {
+                std::cout << "#";
+            } else {
+                std::cout << " ";
+            }
+        }
+
+        std::cout << "]\t\t\t";
+
+        std::cout << i+1 << ". " << vP2Fleet[i]->getShipStr() << "\t[";
+
+        for(int j = 0; j < vP2Fleet[i]->getSize(); j++) {
+            if(j < vP2Fleet[i]->getShipHealth()) {
+                std::cout << "#";
+            } else {
+                std::cout << " ";
+            }
+        }
+
+         std::cout << "]" << std::endl;
+    }
     
+    for(int i = 0; i < 75; i++)     std::cout << "=";
+    std::cout << std::endl;
 }
