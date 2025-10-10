@@ -27,6 +27,8 @@ class Ship {
         int getShipHealth(void);
 
         char getShipChar(void);
+
+        std::string getShipStr(void);
 };
 
 #endif /* __SHIP_H__ */

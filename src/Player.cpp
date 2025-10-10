@@ -9,12 +9,14 @@ Player::Player() {
 #endif
 }
 
+
 Player::Player(std::string szNewName) : szName(szNewName) {
 #ifdef DEBUG
     std::cout << "Player::Player()\tParametrized Constructor" << std::endl;
 #endif
 
 }
+
 
 Player::~Player() {
 #ifdef DEBUG
@@ -27,6 +29,7 @@ Player::~Player() {
     delete pSubmarine;
     delete pCruiser;
 }
+
 
 GameErr_t Player::setName(std::string szNewName) {
 #ifdef DEBUG
@@ -45,7 +48,8 @@ GameErr_t Player::setName(std::string szNewName) {
     return GAME_OK;
 }
 
-std::string Player::getName() {
+
+std::string Player::getName(void) {
 #ifdef DEBUG
     std::cout << "Player::getName()\tMember function" << std::endl;
 #endif
@@ -53,7 +57,8 @@ std::string Player::getName() {
     return this->szName;
 }
 
-Grid* Player::getGrid() {
+
+Grid* Player::getGrid(void) {
 #ifdef DEBUG
     std::cout << "Player::getGrid()\tMember function" << std::endl;
 #endif
@@ -61,7 +66,8 @@ Grid* Player::getGrid() {
     return &sGrid;
 }
 
-GameErr_t Player::initializeShips() {
+
+GameErr_t Player::initializeShips(void) {
 #ifdef DEBUG
     std::cout << "Player::initializeShips()\tMember function" << std::endl;
 #endif
@@ -75,7 +81,8 @@ GameErr_t Player::initializeShips() {
     return GAME_OK;
 }
 
-GameErr_t Player::placeShipsAutomatically() {
+
+GameErr_t Player::placeShipsAutomatically(void) {
 #ifdef DEBUG
     std::cout << "Player::placeShipsAutomatically()\tMember function" << std::endl;
 #endif
@@ -127,6 +134,7 @@ end_auto_place:
     return lErr;
 }
 
+
 bool Player::attack(Player* pOpponent, Position sPos) {
 #ifdef DEBUG
     std::cout << "Player::attack()\tMember function" << std::endl;
@@ -141,6 +149,7 @@ bool Player::attack(Player* pOpponent, Position sPos) {
     }
 }
 
+
 bool Player::isAttacked(Position sPos) {
 #ifdef DEBUG
     std::cout << "Player::isAttacked()\tMember function" << std::endl;
@@ -151,7 +160,8 @@ bool Player::isAttacked(Position sPos) {
     return alreadyHit;
 }
 
-int Player::getPlayerHealth() {
+
+int Player::getPlayerHealth(void) {
 #ifdef DEBUG
     std::cout << "Player::getPlayerHealth()\tMember function" << std::endl;
 #endif
@@ -167,10 +177,57 @@ int Player::getPlayerHealth() {
     return lHealth;
 }
 
-bool Player::isAlive() {
+
+bool Player::isAlive(void) {
 #ifdef DEBUG
     std::cout << "Player::isAlive()\tMember function" << std::endl;
 #endif
 
     return this->getPlayerHealth() > 0;
+}
+
+
+std::vector<Ship*> Player::getFleet(void) {
+#ifdef DEBUG
+    std::cout << "Player::getFleet()\tMember function" << std::endl;
+#endif
+
+    return {
+        this->pCarrier,
+        this->pBattleship,
+        this->pCruiser,
+        this->pSubmarine,
+        this->pDestroyer
+    };
+}
+
+
+void Player::displayFleet(void) {
+#ifdef DEBUG
+    std::cout << "Player::displayFleet()\tMember function" << std::endl;
+#endif
+
+    std::vector<Ship*> vFleet = this->getFleet();
+
+    // Print top bar
+    for(int i = 0; i < 25; i++)     std::cout << "=";
+    std::cout << std::endl;
+
+    for(int i = 0; i < NUM_SHIPS; i++) {
+
+        std::cout << i+1 << ". " << vFleet[i]->getShipStr() << "\t[";
+        
+        for(int j = 0; j < vFleet[i]->getSize(); j++) {
+            if(j < vFleet[i]->getShipHealth()) {
+                std::cout << "#";
+            } else {
+                std::cout << " ";
+            }
+        }
+
+        std::cout << "]" << std::endl;
+    }
+    
+    for(int i = 0; i < 25; i++)     std::cout << "=";
+    std::cout << std::endl;
 }

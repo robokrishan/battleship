@@ -27,6 +27,7 @@ class Battleship {
 
         void printGameBoardV1(void);
         void printGameBoardV2(void);
+        void printFleetScores(void);
 };
 
 #endif /* __BATTLESHIP_H__ */

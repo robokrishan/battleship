@@ -22,8 +22,8 @@ class Player {
 
         GameErr_t setName(std::string);
         std::string getName(void);
-
         Grid* getGrid(void);
+        std::vector<Ship*> getFleet(void);
 
         GameErr_t initializeShips(void);
 
@@ -36,6 +36,8 @@ class Player {
         bool isAlive(void);
 
         bool isAttacked(Position);
+
+        void displayFleet(void);
 };
 
 #endif /* __PLAYER_H__ */

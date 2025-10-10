@@ -125,6 +125,7 @@ GameErr_t Battleship::play() {
         std::cout << (succ ? "HIT" : "miss") << std::endl;
 
         this->printGameBoardV2();
+        this->pPlayers[0].displayFleet();
 
         if(!succ) {
             lPlayerTurn ^= 1;
@@ -341,4 +342,13 @@ void Battleship::printGameBoardV2() {
     std::cout << std::endl;
     for (int i = 0; i < totalWidth; i++) std::cout << "=";
     std::cout << "\n\n";
+}
+
+
+void Battleship::printFleetScores(void) {
+#ifdef DEBUG
+    std::cout << "Battleship::printFleeScores()\tMember function" << std::endl;
+#endif
+
+    
 }
