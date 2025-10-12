@@ -1,3 +1,11 @@
+/*
+ * Project: Battleship
+ * File:    Battlelog.cpp
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #include "Battlelog.h"
 
 #include <iostream>

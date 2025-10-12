@@ -1,3 +1,11 @@
+/*
+ * Project: Battleship
+ * File:    Battlelog.h
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #ifndef __BATTLELOG_H__
 #define __BATTLELOG_H__
 

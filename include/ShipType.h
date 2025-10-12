@@ -1,3 +1,11 @@
+/*
+ * Project: Battleship
+ * File:    ShipType.h
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #ifndef __SHIP_TYPE_H__
 #define __SHIP_TYPE_H__
 

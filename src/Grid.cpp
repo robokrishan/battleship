@@ -1,3 +1,11 @@
+/*
+ * Project: Battleship
+ * File:    Grid.cpp
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #include "Grid.h"
 
 // # define DEBUG

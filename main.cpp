@@ -1,3 +1,11 @@
+/*
+ * Project: Battleship
+ * File:    main.cpp
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>

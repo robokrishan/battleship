@@ -1,3 +1,11 @@
+/*
+ * Project: Battleship
+ * File:    game_err.h
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #ifndef __GAME_ERR_H__
 #define __GAME_ERR_H__
 

@@ -1,3 +1,11 @@
+/*
+ * Project: Battleship
+ * File:    Ship.cpp
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #include "Ship.h"
 
 Ship::Ship(Ship_t eShip) : eType(eShip) {

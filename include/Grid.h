@@ -1,3 +1,11 @@
+/*
+ * Project: Battleship
+ * File:    Grid.h
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #ifndef __GRID_H__
 #define __GRID_H__
 

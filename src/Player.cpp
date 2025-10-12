@@ -1,7 +1,16 @@
+/*
+ * Project: Battleship
+ * File:    Player.cpp
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #include "Player.h"
 #include "BattleshipUtil.h"
 
 // #define DEBUG
+
 
 Player::Player() {
 #ifdef DEBUG
@@ -231,3 +240,4 @@ void Player::displayFleet(void) {
     for(int i = 0; i < 25; i++)     std::cout << "=";
     std::cout << std::endl;
 }
+

@@ -1,3 +1,11 @@
+/*
+ * Project: Battleship
+ * File:    Player.h
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
@@ -23,6 +31,13 @@ class Player {
         GameErr_t setName(std::string);
         std::string getName(void);
         Grid* getGrid(void);
+
+        /*
+            Get the vector containing the fleet of ships.
+
+            Args: None
+            Return: std::vector containing pointers to ships
+        */
         std::vector<Ship*> getFleet(void);
 
         GameErr_t initializeShips(void);

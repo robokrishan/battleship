@@ -1,3 +1,11 @@
+/*
+ * Project: Battleship
+ * File:    Position.h
+ * Author:  robokrishan
+ * Year:    2025
+ * Repo:    https://github.com/robokrishan/Battleship
+ */
+
 #ifndef __POSITION_H__
 #define __POSITION_H__
 
